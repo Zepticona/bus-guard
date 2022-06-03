@@ -45,7 +45,7 @@ export default function Profile() {
             <div className="profile-pic" style={{backgroundImage: `url(profile-pic.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat:'no-repeat'}}></div>
             {/* <Img alt="Avatar" className={'profile-pic'} src="/avatar.jpg" /> */}
             <p className="profile-name">{profile?.name}</p>  
-            <span className="profile-nid">{profile?.nid}</span>
+            <span className="profile-nid">NID: {profile?.nid}</span>
             <button onClick={handlePanic} className="profile-panic-btn">
                 Panic
             </button>
