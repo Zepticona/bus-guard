@@ -14,3 +14,43 @@ a {
 * {
   box-sizing: border-box;
 }
+.profile {
+  max-width: 20rem;
+  box-shadow: 0 0 3px black;
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 5rem auto;
+  text-align: center; 
+}
+.profile-pic {
+  width: 2rem;
+  height: 2rem;
+  /*background: url('profile-pic.jpg');
+  border-radius: 50%;
+  margin: 0 auto;
+  border: 1px solid black; */
+}
+.profile-name {
+  font-size: 24px;
+  margin-bottom: 0px;
+}
+.profile-nid {
+  font-size: 16px;
+  font-weight: 500;
+}
+.profile span, .profile button {
+  display: block;
+  margin: 0 auto;
+}
+
+.profile-panic-btn {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  border: none;
+  background: red;
+  color: white;
+  font-size: 22px;
+  margin-bottom: 10px !important;
+  margin-top: 10px !important;
+}
