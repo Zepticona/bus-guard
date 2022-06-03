@@ -42,6 +42,15 @@ const App = () => {
           </Space>
         ),
       },
+      {
+        title: 'Start The Engine',
+        key: 'startEngine',
+        render: (_, record) => (
+          <Space size="middle">        
+            <a onClick={handleEngineStart}>Start Engine</a>
+          </Space>
+        ),
+      },
     ];
     // const data = [
     //   {
@@ -110,6 +119,15 @@ const App = () => {
       // change bus status 
       axios.patch(`https://desolate-forest-76029.herokuapp.com/api/v1/bus/${currentBusId}`, {
         engineRunning: false
+      })
+      .then(res => {
+        // console.log()
+      })
+      .catch(err => console.log(err));
+    }
+    const handleEngineStart = () => {
+      axios.patch(`https://desolate-forest-76029.herokuapp.com/api/v1/bus/${currentBusId}`, {
+        engineRunning: true
       })
       .then(res => {
         // console.log()
