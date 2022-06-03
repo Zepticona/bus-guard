@@ -81,12 +81,12 @@ const App = () => {
     useEffect(() => {
         // console.log(data);
         // Get data for user
-        axios.get(`http://localhost:5000/api/v1/passenger/${userId}`)
+        axios.get(`https://desolate-forest-76029.herokuapp.com/api/v1/passenger/${userId}`)
         .then( res => {
             const {name, nid, currentBusId} = res.data.data[0];
             setCurrentBusId(currentBusId);
             console.log(res.data);
-            axios.get(`http://localhost:5000/api/v1/bus/${currentBusId}`)
+            axios.get(`https://desolate-forest-76029.herokuapp.com/api/v1/bus/${currentBusId}`)
             .then( res => {
               console.log(res.data.data[0]);
                 const {isPanicked, engineRunning, busLocation} = res.data.data[0];
@@ -108,7 +108,7 @@ const App = () => {
     const handleEngineShutdown = () => {      
       console.log('Shutting down engine...');
       // change bus status 
-      axios.patch(`http://localhost:5000/api/v1/bus/${currentBusId}`, {
+      axios.patch(`https://desolate-forest-76029.herokuapp.com/api/v1/bus/${currentBusId}`, {
         engineRunning: false
       })
       .then(res => {

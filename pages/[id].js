@@ -16,14 +16,14 @@ export default function Profile() {
     // console.log(router.query.id);
     useEffect(() => {
         // Get data for user
-        axios.get(`http://localhost:5000/api/v1/passenger/${userId}`)
+        axios.get(`https://desolate-forest-76029.herokuapp.com/api/v1/passenger/${userId}`)
         .then( res => setProfile(res.data.data[0]))
         .catch(err => console.log(err));
     }, [userId]);
     const handlePanic = () => {
         console.log('Panic was clicked.');
         // change bus status 
-        axios.patch(`http://localhost:5000/api/v1/bus/${profile.currentBusId}`, {
+        axios.patch(`https://desolate-forest-76029.herokuapp.com/api/v1/bus/${profile.currentBusId}`, {
             isPanicked: true
         })
         .then(res => console.log(res.data))
@@ -33,7 +33,7 @@ export default function Profile() {
     const handleCalm = () => {
         console.log('Calm was clicked.');
         // change bus status 
-        axios.patch(`http://localhost:5000/api/v1/bus/${profile.currentBusId}`, {
+        axios.patch(`https://desolate-forest-76029.herokuapp.com/api/v1/bus/${profile.currentBusId}`, {
             isPanicked: false
         })
         .then(res => console.log(res.data))
