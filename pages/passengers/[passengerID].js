@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { Table, Tag, Space } from 'antd';
 import { useRouter } from "next/router";
 import axios from "axios";
+import Image from 'next/image';
+import Img from '../../components/Img';
 
 const App = () => {
     const columns = [
@@ -17,7 +19,7 @@ const App = () => {
         key: 'nid',
       },
       {
-        title: 'Bus Status',
+        title: 'Engine Status',
         dataIndex: 'busStatus',
         key: 'busStatus',
       },
@@ -36,7 +38,7 @@ const App = () => {
         key: 'shutEngine',
         render: (_, record) => (
           <Space size="middle">        
-            <a>Shut Engine</a>
+            <a onClick={handleEngineShutdown}>Shut Engine</a>
           </Space>
         ),
       },
@@ -70,27 +72,32 @@ const App = () => {
         nid: 0,
         busStatus: '',
         panicStatus: '',
-        busLocation: '',
-        shutEngine: ''
+        busLocation: 'Sirajganj Highway'
     }]);
     const [currentBusId, setCurrentBusId] = useState('');
     const router = useRouter();
-    const userId = router?.query?.id;
+    const userId = router?.query?.passengerID;
     // console.log(router.query.id);
     useEffect(() => {
         // console.log(data);
         // Get data for user
         axios.get(`http://localhost:5000/api/v1/passenger/${userId}`)
         .then( res => {
-            const {name, nid, currentBusId} = res.data.data[0]
+            const {name, nid, currentBusId} = res.data.data[0];
+            setCurrentBusId(currentBusId);
             console.log(res.data);
             axios.get(`http://localhost:5000/api/v1/bus/${currentBusId}`)
             .then( res => {
-                const {location, isPanicked, isRunning} = res.data.data[0];
+              console.log(res.data.data[0]);
+                const {isPanicked, engineRunning, busLocation} = res.data.data[0];
+                // console.log(isPanicked, isRunning);
                 // console.log(res);
                 setData([{
                     key: '1',
-                    name, nid, location, isPanicked, isRunning
+                    name, nid,
+                    busLocation: <a href='https://l.facebook.com/l.php?u=https%3A%2F%2Fwww.google.com%2Fmaps%2Fplace%2FRajshahi%2BUniversity%2Bof%2BEngineering%2B%2526%2BTechnology%2F%4024.3620992%2C88.6279741%2C14.95z%2Fdata%3D!4m5!3m4!1s0x39fbefd0a55ea957%3A0x2f9cac3357d62617!8m2!3d24.3635683!4d88.6283773%3Ffbclid%3DIwAR0R3TeMOzYXFQ-pu_xYXckawAXL4GwJC90Pi9mE8SW_ANKtS2Flizbc4YY&h=AT3tatfY-s5yJg4u_F3qgbxvYt33MljV2M4lMZK8BSl7cVnrb90tJrV2STgSBgFwq-OtnnTol8nKOcfMNWhx-ra1VFNwKQAIQmfUrwtxsm6sU96eOZoynvDNXAY-aBPQqBYxCQ' target="_blank" rel="noreferrer">See Location</a>,
+                    panicStatus: isPanicked ? <span className='status status-red'></span> : <span className='status status-green'></span>, 
+                    busStatus: engineRunning ? <span className='status status-green'></span> : <span className='status status-red'></span>, 
                 }]);
 
             })
@@ -98,9 +105,23 @@ const App = () => {
         })
         .catch(err => console.log(err));
     }, [userId]);
-    
+    const handleEngineShutdown = () => {      
+      console.log('Shutting down engine...');
+      // change bus status 
+      axios.patch(`http://localhost:5000/api/v1/bus/${currentBusId}`, {
+        engineRunning: false
+      })
+      .then(res => {
+        // console.log()
+      })
+      .catch(err => console.log(err));
+    }
     return (
+      <div>
+        <Img alt="Logo" src="/logo.jpeg" className={'logo'} />
         <Table columns={columns} dataSource={data} />
+      </div>
+        
     )
 } 
 

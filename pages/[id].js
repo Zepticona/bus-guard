@@ -29,6 +29,17 @@ export default function Profile() {
         .then(res => console.log(res.data))
         .catch(err => console.log(err));
     }
+
+    const handleCalm = () => {
+        console.log('Calm was clicked.');
+        // change bus status 
+        axios.patch(`http://localhost:5000/api/v1/bus/${profile.currentBusId}`, {
+            isPanicked: false
+        })
+        .then(res => console.log(res.data))
+        .catch(err => console.log(err));
+    }
+
     return (
         <article className="profile">
             <div className="profile-pic" style={{backgroundImage: `url(profile-pic.jpg)`, backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat:'no-repeat'}}></div>
@@ -38,7 +49,7 @@ export default function Profile() {
             <button onClick={handlePanic} className="profile-panic-btn">
                 Panic
             </button>
-            <Button type="primary" size="large" className="profile-okay-btn">I am okay</Button>
+            <Button onClick={handleCalm} type="primary" size="large" className="profile-okay-btn">I am okay</Button>
         </article>
     )
 }
